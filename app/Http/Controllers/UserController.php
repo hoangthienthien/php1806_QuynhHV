@@ -14,6 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        
         $users = User::all();
         return view('user.userlist', ['users'=>$users]);
     }
@@ -25,6 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
+
         //
     }
 
@@ -72,17 +74,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        $rule = [
-            'name' => 'required',
-            'email' => 'required|email',
-        ];
-        $user->update([
-            'name' => $request->get('name'),
-            'email'=> $request->get('email')
-        ]);
- 
-        return \Redirect::route('users.edit',array($user->id))->with('message','Thông tin người dùng đã được cập nhật!');
+        
         
     }
 
@@ -94,11 +86,23 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $users = User::find($id);
-        $users->delete();
+        
+        try{
+            $user = User::find($id);
+            $user -> delete();
+            $result = [
+                'status' => 'true',
+                'msg' => 'Delete success',
 
-        // redirect
-        Session::flash('message', 'Successfully deleted the nerd!');
-        return Redirect::to('users');
+            ];
+        } catch (Exception $e) {
+            $result = [
+                'status' => 'false',
+                'msg' => 'Delete fail',
+            ];
+        }
+        
+
+        
     }
 }
