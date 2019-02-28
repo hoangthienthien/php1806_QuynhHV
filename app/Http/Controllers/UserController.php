@@ -16,7 +16,8 @@ class UserController extends Controller
     {
         
         $users = User::all();
-        return view('user.userlist', ['users'=>$users]);
+
+        return view('user.userlist', ['users' => $users]);
     }
 
     /**
@@ -27,7 +28,7 @@ class UserController extends Controller
     public function create()
     {
 
-        //
+
     }
 
     /**
@@ -50,6 +51,7 @@ class UserController extends Controller
     public function show($id)
     {
         $uses = User::find($id);
+
         return view('use.showuser', ['users' => $users]);
     }
 
@@ -62,6 +64,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $users = User::find($id);
+
         return view('user.edituser', ['users' => $users]);
     }
 
@@ -74,7 +77,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         
     }
 
@@ -101,8 +103,6 @@ class UserController extends Controller
                 'msg' => 'Delete fail',
             ];
         }
-        
-
         
     }
 }
