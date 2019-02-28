@@ -18,5 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::view('grocery', 'grocery');
-Route::post('/grocery/post','GroceryController@store');
+Route::prefix('order')->group(function () {
+	Route::get('/create', function () {
+		return view('order.create');
+	});
+});
+
