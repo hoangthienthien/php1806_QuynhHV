@@ -18,5 +18,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::view('grocery', 'grocery');
-Route::post('/grocery/post','GroceryController@store');
+
+Route::get('/user', function() {
+	return view('user.userlist');
+});
+//Route::get('/user','UserController@index')->name('user.index');
+Route::get('/user/delete/{id}','UserController@destroy')->name('user.destroy');
+
