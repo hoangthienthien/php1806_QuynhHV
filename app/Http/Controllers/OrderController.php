@@ -23,7 +23,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        
+        return view('order.create');
     }
 
     /**
@@ -34,7 +34,16 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $order = new \App\Orders;
+
+        $order->user_id = $request->get('userid');
+        $order->total_price = $request->get('totalprice');
+        $order->description = $request->get('description');
+        $order->save();
+
+        return view('order.Index');
+
+
     }
 
     /**

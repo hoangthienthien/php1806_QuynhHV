@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Products;
 
 class ProductController extends Controller
 {
@@ -13,7 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Products::all();
+
+        return view('product.index',['products' => $products]);
     }
 
     /**
@@ -23,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.create');
     }
 
     /**
@@ -34,7 +37,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = new \App\Products;
+        
+        $product->category_id = $request->get('category_id');
+        $product->product_na = $request->get('product_na');
+        $product->price = $request->get('price');
+        $product->image = $request->get('image');
+        $product->quanity = $request->get('quanity');
+        $product->avg_rating = $request->get('avg_rating');
+
+        $product->save();
+
+        return view('product.index');
     }
 
     /**
@@ -79,6 +93,21 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+
+            $product = Products::findOrFail($id);
+            $product->delete();
+
+            return response()->json(['success'=> 'Product is successfully deleted']);
+
+
+        } catch(\Exception $e) {
+            return response()->json([
+                'success' => 'false',
+                'error' => $e->getMessage(),
+
+             ], 400);
+
+        }
     }
 }
