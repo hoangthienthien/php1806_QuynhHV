@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Products;
 
-class OrderController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $products = Products::all();
+
+        return view('product.index',['products' => $products]);
     }
 
     /**
@@ -23,7 +26,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('order.create');
+        return view('product.create');
     }
 
     /**
@@ -34,15 +37,18 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order = new \App\Orders;
+        $product = new \App\Products;
+        
+        $product->category_id = $request->get('category_id');
+        $product->product_na = $request->get('product_na');
+        $product->price = $request->get('price');
+        $product->image = $request->get('image');
+        $product->quanity = $request->get('quanity');
+        $product->avg_rating = $request->get('avg_rating');
 
-        $order->user_id = $request->get('userid');
-        $order->total_price = $request->get('totalprice');
-        $order->description = $request->get('description');
-        $order->save();
+        $product->save();
 
-        return view('order.Index');
-
+        return view('product.index');
     }
 
     /**
@@ -87,6 +93,21 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+
+            $product = Products::findOrFail($id);
+            $product->delete();
+
+            return response()->json(['success'=> 'Product is successfully deleted']);
+
+
+        } catch(\Exception $e) {
+            return response()->json([
+                'success' => 'false',
+                'error' => $e->getMessage(),
+
+             ], 400);
+
+        }
     }
 }
