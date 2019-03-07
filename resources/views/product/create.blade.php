@@ -16,8 +16,8 @@
 						<th scope="col"><input type="text" name="category_id"></th>
 					</tr>
 					<tr>
-						<th scope="col"><label for="product_na">Product NA</label></th>
-						<th scope="col"><input type="text" name="product_na"></th>
+						<th scope="col"><label for="product_name">Product Name</label></th>
+						<th scope="col"><input type="text" name="product_name"></th>
 					</tr>
 					<tr>
 						<th scope="col"><label for="price">Price</label></th>
