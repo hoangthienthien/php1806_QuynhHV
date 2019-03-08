@@ -50,29 +50,30 @@
         $('.btn-del-product').on('click', function() {
 
             var productid = $(this).data("product-id");
-            var url = '/product/delete' + productid;
-            console.log(productid);
-            // $.ajaxSetup({
-   //              headers: {
-   //                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-   //              }
-      //       });
-            // $.ajax({
+            //var productid = $(".btn-del-product").attr("data-product-id");
+            var url = '/product/delete/' + productid;
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+            $.ajax({
 
-            //  url: url,
-            //  type: 'DELETE',
-            //  success: function(result) {
-            //      if (result.status) {
-   //                          $('.row_' + userId).remove();
-   //                      } else {
-   //                          alert(result.msg);
-   //                      }
-            //  }
-            //  error: function() {
-            //      location.reload();
-            //  }
+	             url: url,
+	             method: 'POST',
+	             type: 'DELETE',
+	             success: function(result) {
+	                 if (result.status) {
+	                            $('.row_' + productid).remove();
+	                        } else {
+	                            alert('Delete success');
+	                        }
+	             },
+	             error: function() {
+	                 location.reload();
+	             }
 
-            // });
+            });
         });
     });
 </script>

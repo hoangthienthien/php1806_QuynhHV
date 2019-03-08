@@ -40,7 +40,7 @@ class ProductController extends Controller
         $product = new \App\Products;
         
         $product->category_id = $request->get('category_id');
-        $product->product_na = $request->get('product_na');
+        $product->product_name = $request->get('product_name');
         $product->price = $request->get('price');
         $product->image = $request->get('image');
         $product->quanity = $request->get('quanity');
@@ -48,7 +48,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return view('product.index');
+        return redirect()->route('product.index');
     }
 
     /**
@@ -93,21 +93,24 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        try{
+        dd(1);
+        // try{
 
-            $product = Products::findOrFail($id);
-            $product->delete();
+        //     $product = Products::findOrFail($id);
+        //     $product->delete();
 
-            return response()->json(['success'=> 'Product is successfully deleted']);
+        //     $result = [
+        //         'status' => 'true',
+        //         'msg' => 'Delete success',
+        //     ];
 
 
-        } catch(\Exception $e) {
-            return response()->json([
-                'success' => 'false',
-                'error' => $e->getMessage(),
+        // } catch(\Exception $e) {
+        //     $result = [
+        //         'status' => 'false',
+        //         'msg' => 'Delete fail',
+        //     ];
 
-             ], 400);
-
-        }
+        // }
     }
 }
