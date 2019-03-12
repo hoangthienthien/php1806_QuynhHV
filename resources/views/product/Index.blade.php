@@ -29,7 +29,7 @@
                   <td scope="col">{{$product->image}}</td>
                   <td scope="col">
                         <button type="button" name="edit">Edit</button>
-                        <div class="btn btn-info btn-del-product" role="button" id="delete-button" data-product-id = "{{ $product->id }}">DELETE</div>
+                        <div class="btn btn-info btn-del-product" data-product-id = "{{ $product->id }}">DELETE</div>
                   </td>
                 </tr>
             @endforeach
@@ -39,42 +39,37 @@
         <button type="submit">Add Product</button>
     </form>
 
-
-@endsection
-@section('javascript')
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+        $('.btn-del-product').click(function() {
+            if (confirm('You are sure?')) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
 
-        $('.btn-del-product').on('click', function() {
-
-            var productid = $(this).data("product-id");
-            //var productid = $(".btn-del-product").attr("data-product-id");
-            var url = '/product/delete/' + productid;
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                }
-            });
-            $.ajax({
-
-	             url: url,
-	             method: 'POST',
-	             type: 'DELETE',
-	             success: function(result) {
-	                 if (result.status) {
-	                            $('.row_' + productid).remove();
-	                        } else {
-	                            alert('Delete success');
-	                        }
-	             },
-	             error: function() {
-	                 location.reload();
-	             }
-
-            });
+                var productId = $(this).data('product-id');
+                var url = '/product/delete/' + productId;
+                console.log(url);
+                
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    success: function(result) {
+                        // if (result.status) {
+                        //     $('.row_' + productId).remove();
+                        // } else {
+                        //     alert(result.msg);
+                        // }
+                    },
+                    error: function() {
+                        // location.reload();
+                    }
+                });
+            }
         });
     });
 </script>
+
 @endsection

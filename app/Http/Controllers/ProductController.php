@@ -59,7 +59,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Products::find($id);
+
+        return view('product.show',[]);
     }
 
     /**
@@ -70,7 +72,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -93,6 +95,12 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        $result = [
+            'status' => false,
+            'msg' => 'Delete fail',
+        ];
+
+        return response()->json($result);
         dd(1);
         // try{
 
