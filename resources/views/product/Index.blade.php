@@ -50,21 +50,21 @@
                 });
 
                 var productId = $(this).data('product-id');
-                var url = '/product/delete/' + productId;
-                console.log(url);
+                var url = 'http://localhost/php1806_QuynhHV/public/product/delete/' + productId;
                 
                 $.ajax({
                     url: url,
                     type: 'DELETE',
                     success: function(result) {
-                        // if (result.status) {
-                        //     $('.row_' + productId).remove();
-                        // } else {
-                        //     alert(result.msg);
-                        // }
+                        if (result.status) {
+                            $('.row_' + productId).remove();
+                            alert(result.msg);
+                        } else {
+                            alert(result.msg);
+                        }
                     },
                     error: function() {
-                        // location.reload();
+                        location.reload();
                     }
                 });
             }

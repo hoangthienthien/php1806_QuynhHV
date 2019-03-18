@@ -95,30 +95,24 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $result = [
-            'status' => false,
-            'msg' => 'Delete fail',
-        ];
+        try{
 
+            $product = Products::findOrFail($id);
+            $product->delete();
+
+            $result = [
+                'status' => 'true',
+                'msg' => 'Delete success',
+            ];
+
+
+        } catch(\Exception $e) {
+            $result = [
+                'status' => 'false',
+                'msg' => 'Delete fail',
+            ];
+
+        }
         return response()->json($result);
-        dd(1);
-        // try{
-
-        //     $product = Products::findOrFail($id);
-        //     $product->delete();
-
-        //     $result = [
-        //         'status' => 'true',
-        //         'msg' => 'Delete success',
-        //     ];
-
-
-        // } catch(\Exception $e) {
-        //     $result = [
-        //         'status' => 'false',
-        //         'msg' => 'Delete fail',
-        //     ];
-
-        // }
     }
 }
