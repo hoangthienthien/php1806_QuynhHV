@@ -19,7 +19,7 @@
           </thead>
           <tbody>
             @foreach($products as $product)
-                <tr>
+                <tr class="row_{{ $product->id }}">
                   <th scope="col">{{$product->id}}</th>
                   <td scope="col">{{$product->category_id}}</td>
                   <td scope="col">{{$product->product_name}}</td>
@@ -28,7 +28,7 @@
                   <td scope="col">{{$product->avg_rating}}</td>
                   <td scope="col">{{$product->image}}</td>
                   <td scope="col">
-                        <button type="button" name="edit">Edit</button>
+                        <a href = "http://localhost/php1806_QuynhHV/public/product/edit/{{$product->id}}" class="btn btn-info" role = "button">Edit</a>
                         <div class="btn btn-info btn-del-product" data-product-id = "{{ $product->id }}">DELETE</div>
                   </td>
                 </tr>
@@ -42,7 +42,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('.btn-del-product').click(function() {
-            if (confirm('You are sure?')) {
+            if (confirm('Are you sure?')) {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
