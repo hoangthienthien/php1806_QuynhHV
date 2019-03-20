@@ -2,7 +2,7 @@
 
 @section ("content")
 	<div class="container">
-		<form method="POST" action="{{route('product.update')}}">
+		<form method="POST" action="{{route('product.update',$product->id)}}">
 			@csrf
 			<table class="table">
 				<thead>
