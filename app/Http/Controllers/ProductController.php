@@ -96,7 +96,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $data = $request->only([
             'category_id',
@@ -105,8 +105,16 @@ class ProductController extends Controller
             'image',
             'quanity',
             'avg_rating',
-
         ]);
+        try{
+            $product = Products::find($id);
+            $product->update($data);
+
+        }catch(Exception $e) {
+            return back()->with('Fail', 'Update fail');
+        }
+
+        return redirect('product/index')->with('success','Update success');
     }
 
     /**
