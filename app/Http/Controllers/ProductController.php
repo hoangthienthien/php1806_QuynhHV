@@ -105,9 +105,12 @@ class ProductController extends Controller
             'image',
             'quanity',
             'avg_rating',
+            //'description',
         ]);
         try{
             $product = Products::find($id);
+            //dd($product);
+            //dd($data);
             $product->update($data);
 
         }catch(Exception $e) {
