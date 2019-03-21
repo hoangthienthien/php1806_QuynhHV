@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Products;
+use App\Http\Requests\ProductCreateRequest;
 
 class ProductController extends Controller
 {
@@ -35,20 +36,24 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductCreateRequest $request)
     {
-        $product = new \App\Products;
-        
-        $product->category_id = $request->get('category_id');
-        $product->product_name = $request->get('product_name');
-        $product->price = $request->get('price');
-        $product->image = $request->get('image');
-        $product->quanity = $request->get('quanity');
-        $product->avg_rating = $request->get('avg_rating');
+        $data = $request->only([
+            'category_id',
+            'product_name',
+            'price',
+            'image',
+            'quanity',
+            'avg_rating',
+            //'description',
+        ]);
+        try{
+            $product = Products::create($data);
+        }catch(Exception $e) {
+            return back()->with('status', 'Create fail!');
+        }
 
-        $product->save();
-
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('sucees', 'Create product succes');
     }
 
     /**
