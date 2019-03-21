@@ -50,7 +50,12 @@
 							  <div class="form-group row">
 							    <label for="inlineFormInput" class="col-sm-2 col-form-label">Category ID</label>
 							    <div class="col-sm-4">
-							      <input type="text" class="form-control" id="category_id" name="category_id">
+							      <input type="text" class="form-control" id="category_id {{ $errors->has('category_id') ? ' is-invalid' : '' }}" name="category_id" required autofocus>
+							      @if($errors->has('category_id'))
+								      <span class="invalid-feedback" role="alert">
+								      		<strong>{{$errors->first('category_id')}}</strong>
+								      </span>
+							       @endif
 							    </div>
 							  </div>
 							  <div class="form-group row">
@@ -85,8 +90,8 @@
 							  </div>
 							  <div class="form-group row">
 							    <label for="inlineFormInput" class="col-sm-2 col-form-label">Description</label>
-							    <div class="col-sm-4">
-							      <textarea class="ckeditor" name="editor" cols="80" rows="5"></textarea>
+							    <div class="col-sm-10">
+							      <textarea class="ckeditor" name="description" id="description" cols="100" rows="9"></textarea>
 							    </div>
 							  </div>
 							  
@@ -100,9 +105,15 @@
 				</div>
 			</div>
 		</div>
-
-
-
-
 	</div>
+
+	
+	<script>
+        ClassicEditor
+            .create( document.querySelector( '#description' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+
+    </script>
 @endsection

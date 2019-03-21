@@ -45,15 +45,16 @@ class ProductController extends Controller
             'image',
             'quanity',
             'avg_rating',
-            //'description',
+            'description',
         ]);
+        dd($data);
         try{
             $product = Products::create($data);
         }catch(Exception $e) {
             return back()->with('status', 'Create fail!');
         }
 
-        return redirect()->route('product.index')->with('sucees', 'Create product succes');
+        return redirect()->route('product.index')->with('success', 'Create product succes');
     }
 
     /**

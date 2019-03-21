@@ -14,6 +14,7 @@ class products extends Model
     	'image',
     	'quanity',
     	'avg_rating',
+    	'description',
     ];
 
     public function Orders() {
