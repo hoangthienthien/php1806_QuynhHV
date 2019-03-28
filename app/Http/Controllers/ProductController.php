@@ -38,6 +38,7 @@ class ProductController extends Controller
      */
     public function store(ProductCreateRequest $request)
     {
+        
         $data = $request->only([
             'category_id',
             'product_name',
@@ -47,7 +48,6 @@ class ProductController extends Controller
             'avg_rating',
             'description',
         ]);
-        dd($data);
         try{
             $product = Products::create($data);
         }catch(Exception $e) {

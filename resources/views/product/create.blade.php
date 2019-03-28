@@ -50,7 +50,7 @@
 							  <div class="form-group row">
 							    <label for="inlineFormInput" class="col-sm-2 col-form-label">Category ID</label>
 							    <div class="col-sm-4">
-							      <input type="text" class="form-control" id="category_id {{ $errors->has('category_id') ? ' is-invalid' : '' }}" name="category_id" required autofocus>
+							      <input type="text" class="form-control" id="category_id {{ $errors->has('category_id') ? ' is-invalid' : '' }}" name="category_id" autofocus>
 							      @if($errors->has('category_id'))
 								      <span class="invalid-feedback" role="alert">
 								      		<strong>{{$errors->first('category_id')}}</strong>

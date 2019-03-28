@@ -25,11 +25,29 @@ class ProductCreateRequest extends FormRequest
     {
         return [
             'category_id' => ['required'],
-            'product_name' => ['required'],
-            'price' => ['required', 'integer'],
-            'image' => ['required'],
-            'quantity' => ['required', 'integer'],
-            'avg_rating' => ['required'],
+            // 'product_name' => ['required'],
+            // 'price' => ['required', 'integer'],
+            // 'image' => ['required'],
+            // 'quantity' => ['required', 'integer'],
+            // 'avg_rating' => ['required'],
         ];
     }
+
+    public function messages() {
+        return [
+            'category_id.required' => 'Nhap truong nay di em',
+        ];
+    }
+
+    protected function failValidation(Validator $validaor) {
+        $error = (new ValidationException($validator)) ->errors();
+        throw new HttpResponseException(response()->json(
+            [
+                'error' => $errors,
+                'status_code' => 422,
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY
+        ));
+        
+    }
+
 }
