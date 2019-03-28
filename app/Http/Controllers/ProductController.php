@@ -38,8 +38,8 @@ class ProductController extends Controller
      */
     public function store(ProductCreateRequest $request)
     {
-        
-        $data = $request->only([
+
+        $product= $request->only([
             'category_id',
             'product_name',
             'price',
@@ -48,8 +48,13 @@ class ProductController extends Controller
             'avg_rating',
             'description',
         ]);
+        $uploaded = $this->uploadimage($product['image']);
+
+        if(!$uploaded['status']) {
+            return back()->with('status', $uploaded['msg']);
+        }
         try{
-            $product = Products::create($data);
+            Products::create($product);
         }catch(Exception $e) {
             return back()->with('status', 'Create fail!');
         }
@@ -153,5 +158,35 @@ class ProductController extends Controller
 
         }
         return response()->json($result);
+    }
+
+    private function uploadimage($file) {
+        $destinationFolder = public_path() . "/" . config('products.image_path');
+        try {
+            $fileName = $file->getClientOriginnalName() . '_' .date('Ymd_His');
+            $ext = $file->getClientOriginalExtension();
+
+            if($imageFileType != "jpg" && $imageFileType != 'png') {
+                $result = [
+                    'status' => false,
+                    'msg' => 'Anh chỉ chấp nhận jpg với png thôi cưng',
+                ];
+            }
+
+            $file->move($destinationFolder, $fileName);
+
+            $result = [
+                'status' => true,
+                'file_name' => $fileName,
+            ];
+        } catch(Exception $e) {
+            $msg = $e->getMessage();
+
+            $result = [
+                'status' => false,
+                'msg' => $msg,
+            ];
+        }
+        return $result;
     }
 }
