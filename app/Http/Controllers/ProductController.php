@@ -53,6 +53,7 @@ class ProductController extends Controller
         if(!$uploaded['status']) {
             return back()->with('status', $uploaded['msg']);
         }
+        $data['image'] = $uploaded['file_name'];
         try{
             Products::create($product);
         }catch(Exception $e) {
@@ -76,7 +77,7 @@ class ProductController extends Controller
             return back();
         }
         else {
-            return view('product.show',[]);
+            return view('product.show',['product'=>$product]);
         }
 
         
@@ -116,12 +117,10 @@ class ProductController extends Controller
             'image',
             'quanity',
             'avg_rating',
-            //'description',
+            'description',
         ]);
         try{
             $product = Products::find($id);
-            //dd($product);
-            //dd($data);
             $product->update($data);
 
         }catch(Exception $e) {
@@ -150,7 +149,7 @@ class ProductController extends Controller
             ];
 
 
-        } catch(\Exception $e) {
+        } catch(Exception $e) {
             $result = [
                 'status' => 'false',
                 'msg' => 'Delete fail',
@@ -163,7 +162,7 @@ class ProductController extends Controller
     private function uploadimage($file) {
         $destinationFolder = public_path() . "/" . config('products.image_path');
         try {
-            $fileName = $file->getClientOriginnalName() . '_' .date('Ymd_His');
+            $fileName = $file->getClientOriginalName() . '_' . date('Ymd_His');
             $ext = $file->getClientOriginalExtension();
 
             if($imageFileType != "jpg" && $imageFileType != 'png') {

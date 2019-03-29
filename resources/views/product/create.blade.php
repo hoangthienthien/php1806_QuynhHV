@@ -23,19 +23,29 @@
 							  <div class="form-group row">
 							    <label for="inlineFormInput" class="col-sm-2 col-form-label">Product Name</label>
 							    <div class="col-sm-4">
-							      <input type="text" class="form-control" id="product_name" name="product_name" >
+							      <input type="text" class="form-control {{ $errors->has('product_name') ? ' is-invalid' : '' }}" id="product_name" name="product_name" >
+							      @if($errors->has('product_name'))
+								      <span class="invalid-feedback" role="alert">
+								      		<strong>{{$errors->first('product_name')}}</strong>
+								      </span>
+							       @endif
 							    </div>
 							  </div>
 							  <div class="form-group row">
 							    <label for="inlineFormInput" class="col-sm-2 col-form-label">Price</label>
 							    <div class="col-sm-4">
-							      <input type="text" class="form-control" id="price" name="price">
+							      <input type="text" class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}" id="price" name="price">
 							    </div>
+							    @if($errors->has('price'))
+								      <span class="invalid-feedback" role="alert">
+								      		<strong>{{ $errors->first('price') }}</strong>
+								      </span>
+							    @endif
 							  </div>
 							  <div class="form-group row">
 							    <label for="inlineFormInput" class="col-sm-2 col-form-label">Image</label>
 							    <div class="col-sm-4">
-							      <input type="text" class="form-control" id="image" name="image">
+							      <input type="file" id="image" name="image">
 							    </div>
 							  </div>
 							  <div class="form-group row">

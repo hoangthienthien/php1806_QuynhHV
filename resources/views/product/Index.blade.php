@@ -22,7 +22,7 @@
                 <tr class="row_{{ $product->id }}">
                   <th scope="col">{{$product->id}}</th>
                   <td scope="col">{{$product->category_id}}</td>
-                  <td scope="col">{{$product->product_name}}</td>
+                  <td scope="col"><a href="{{ route('product.show',['product' => $product->id])}}">{{$product->product_name}}</a></td>
                   <td scope="col">{{$product->price}}</td>
                   <td scope="col">{{$product->quanity}}</td>
                   <td scope="col">{{$product->avg_rating}}</td>

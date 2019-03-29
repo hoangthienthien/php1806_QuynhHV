@@ -34,5 +34,6 @@ Route::prefix('product')->group(function() {
 	Route::delete('/delete/{id}','ProductController@destroy')->name('product.destroy');
 	Route::get('/edit/{id}','ProductController@edit')->name('product.edit');
 	Route::post('/update/{id}','ProductController@update')->name('product.update');
+	Route::get('/show/{id}','ProductController@show')->name('product.show');
 });
 

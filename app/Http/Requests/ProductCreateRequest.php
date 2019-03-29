@@ -28,17 +28,17 @@ class ProductCreateRequest extends FormRequest
             'category_id' => ['required', 'numeric'],
             'product_name' => ['required'],
             'price' => ['required', 'integer'],
-            'image' => ['required'],
-            'quantity' => ['required', 'integer'],
-            'avg_rating' => ['required'],
+            // 'image' => ['required'],
+            // 'quantity' => ['required', 'integer'],
+            // 'avg_rating' => ['required'],
         ];
     }
 
-    public function messages() {
-        return [
-            'category_id.required' => 'Nhap truong nay di em',
-        ];
-    }
+    // public function messages() {
+    //     return [
+    //         'category_id.required' => 'Nhap truong nay di em',
+    //     ];
+    // }
 
     protected function failValidation(Validator $validaor) {
         $error = (new ValidationException($validator)) ->errors();
