@@ -159,33 +159,58 @@ class ProductController extends Controller
         return response()->json($result);
     }
 
-    private function uploadimage($file) {
-        $destinationFolder = public_path() . "/" . config('products.image_path');
-        try {
-            $fileName = $file->getClientOriginalName() . '_' . date('Ymd_His');
-            $ext = $file->getClientOriginalExtension();
+    private function uploadimage(Request $rq) {
+    //     $destinationFolder = public_path() . "/" . config('products.image_path');
+    //     try {
+    //         $fileName = $file->getClientOriginalName();
+    //         $ext = $file->getClientOriginalExtension();
 
-            if($imageFileType != "jpg" && $imageFileType != 'png') {
-                $result = [
-                    'status' => false,
-                    'msg' => 'Anh chỉ chấp nhận jpg với png thôi cưng',
-                ];
-            }
+    //         if($imageFileType != "jpg" && $imageFileType != 'png') {
+    //             $result = [
+    //                 'status' => false,
+    //                 'msg' => 'Anh chỉ chấp nhận jpg với png thôi cưng',
+    //             ];
+    //         }
 
-            $file->move($destinationFolder, $fileName);
+    //         $file->move($destinationFolder, $fileName);
 
-            $result = [
-                'status' => true,
-                'file_name' => $fileName,
-            ];
-        } catch(Exception $e) {
-            $msg = $e->getMessage();
+    //         $result = [
+    //             'status' => true,
+    //             'file_name' => $fileName,
+    //         ];
+    //     } catch(Exception $e) {
+    //         $msg = $e->getMessage();
 
-            $result = [
-                'status' => false,
-                'msg' => $msg,
-            ];
+    //         $result = [
+    //             'status' => false,
+    //             'msg' => $msg,
+    //         ];
+    //     }
+    //     return $result;
+
+        $rules = [ 'image' => 'image|max:1024'];
+        $post = [ 'image' => $rq->file('image')];
+
+        // Validator de kiem tra
+        $valid = Validator::make($post,$rule);
+
+        // kiem tra neu co loi
+        if($valid->fails()) {
+
+            return redirect()->back()->withErrors($valid)->withInput();
         }
-        return $result;
+        else {
+            if($rq->file('image')->isValid()) {
+                $fileName = $rq->file('image')->getClientOriginalExtension();
+                $fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
+                $uploadPath = public_path('/upload');
+                $rq->file('image')->move($uplaodPath, $fileName);
+
+                return redirect()->back()->with('success', 'Upload thanh cong');
+            }
+            else {
+                return redirect->back()->with('erros','Upload that bai');
+            }
+        }
     }
 }

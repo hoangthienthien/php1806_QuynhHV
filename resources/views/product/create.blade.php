@@ -45,7 +45,7 @@
 							  <div class="form-group row">
 							    <label for="inlineFormInput" class="col-sm-2 col-form-label">Image</label>
 							    <div class="col-sm-4">
-							      <input type="file" id="image" name="image">
+							      <input id="image" type="file" class="form-control {{ $errors->has('image') ? ' is-invalid' : '' }}" name="image">
 							    </div>
 							  </div>
 							  <div class="form-group row">
