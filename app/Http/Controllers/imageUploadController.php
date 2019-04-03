@@ -42,7 +42,8 @@ class imageUploadController extends Controller
 
   
 
-        request()->image->move(public_path('images'), $imageName);
+        // request()->image->move(public_path('images'), $imageName);
+        request()->image->move(storage_path('images'), $imageName);
 
   
 

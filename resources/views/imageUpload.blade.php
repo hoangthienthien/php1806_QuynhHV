@@ -36,7 +36,8 @@
 
         </div>
 
-        <img src="images/{{ Session::get('image') }}">
+        <!-- <img src="storage/images/{{ Session::get('image') }}"> -->
+        <img src="public/images/1554103391.jpg">
 
         @endif
 
