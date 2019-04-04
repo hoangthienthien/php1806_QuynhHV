@@ -7,7 +7,7 @@
 				<div class="card">
 					<div class="card-header">Create Product</div>
 					<div class="card-body">
-						<form method="POST" action="{{route('product.store')}}">
+						<form method="POST" action="{{route('product.store')}}" enctype="multipart/form-data">
 							@csrf
 							  <div class="form-group row">
 							    <label for="inlineFormInput" class="col-sm-2 col-form-label">Category ID</label>
@@ -42,12 +42,32 @@
 								      </span>
 							    @endif
 							  </div>
-							  <div class="form-group row">
+							  <!-- <div class="form-group row">
 							    <label for="inlineFormInput" class="col-sm-2 col-form-label">Image</label>
 							    <div class="col-sm-4">
 							      <input id="image" type="file" class="form-control {{ $errors->has('image') ? ' is-invalid' : '' }}" name="image">
 							    </div>
-							  </div>
+							  </div> -->
+
+							 <div class="form-group row">
+	                            <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('image') }}</label>
+
+	                            <div class="col-md-6">
+	                                <input id="image" type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" required>
+
+	                                @if ($errors->has('image'))
+	                                    <span class="invalid-feedback" role="alert">
+	                                        <strong>{{ $errors->first('image') }}</strong>
+	                                    </span>
+	                                @endif
+	                            </div>
+                        	</div>
+
+
+
+
+
+
 							  <div class="form-group row">
 							    <label for="inlineFormInput" class="col-sm-2 col-form-label">Quanity</label>
 							    <div class="col-sm-4">
