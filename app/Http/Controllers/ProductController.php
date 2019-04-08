@@ -39,28 +39,43 @@ class ProductController extends Controller
     public function store(ProductCreateRequest $request)
     {
 
-        $product= $request->only([
-            'category_id',
-            'product_name',
-            'price',
-            'image',
-            'quanity',
-            'avg_rating',
-            'description',
-        ]);
-        $uploaded = $this->uploadimage($product['image']);
+        // $product= $request->only([
+        //     'category_id',
+        //     'product_name',
+        //     'price',
+        //     //'image',
+        //     'quanity',
+        //     'avg_rating',
+        //     'description',
+        // ]);
+        // $product = $request->file('image');
+        // $uploaded = $this->uploadimage($product['image']);
 
-        if(!$uploaded['status']) {
-            return back()->with('status', $uploaded['msg']);
-        }
-        $product['image'] = $uploaded['file_name'];
-        try{
-            Products::create($product);
-        }catch(Exception $e) {
-            return back()->with('status', 'Create fail!');
-        }
+        // if(!$uploaded['status']) {
+        //     return back()->with('status', $uploaded['msg']);
+        // }
+        // $product['image'] = $uploaded['file_name'];
+        // try{
+        //     Products::create($product);
+        // }catch(Exception $e) {
+        //     return back()->with('status', 'Create fail!');
+        // }
 
+        // return redirect()->route('product.index')->with('success', 'Create product succes');
+
+        $image = $request->file('image');
+        $uploaded = $this->uploadimage($image);
+        $product = new Products;
+        $product->category_id = $request->category_id;
+        $product->product_name = $request->product_name;
+        $product->price = $request->price;
+        $product->quanity = $request->quanity;
+        $product->image = $uploaded['destination'] . \ . $uploaded['file_name'];
+        $product->avg_rating = $request->avg_rating;
+        $product->description = $request->description;
+        $product->save();
         return redirect()->route('product.index')->with('success', 'Create product succes');
+
     }
 
     /**
@@ -160,7 +175,8 @@ class ProductController extends Controller
     }
 
     private function uploadimage($file) {
-        $destinationFolder = public_path('images') . "/" . config('products.image_path');;
+        $destinationFolder = public_path('image');
+
         try {
             $fileName = $file->getClientOriginalName();
             $imageFileType = $file->getClientOriginalExtension();
@@ -177,6 +193,7 @@ class ProductController extends Controller
             $result = [
                 'status' => true,
                 'file_name' => $fileName,
+                'destination' => $destinationFolder,
             ];
         } catch(Exception $e) {
             $msg = $e->getMessage();
@@ -184,6 +201,7 @@ class ProductController extends Controller
             $result = [
                 'status' => false,
                 'msg' => $msg,
+
             ];
         }
         return $result;
