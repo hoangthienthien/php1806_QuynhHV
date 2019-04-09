@@ -53,7 +53,7 @@
 	                            <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('image') }}</label>
 
 	                            <div class="col-md-6">
-	                                <input id="image" type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" required>
+	                                <input id="image" type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="image">
 
 	                                @if ($errors->has('image'))
 	                                    <span class="invalid-feedback" role="alert">

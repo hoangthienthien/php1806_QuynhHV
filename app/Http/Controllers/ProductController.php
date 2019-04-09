@@ -65,16 +65,24 @@ class ProductController extends Controller
 
         $image = $request->file('image');
         $uploaded = $this->uploadimage($image);
+        
         $product = new Products;
+
         $product->category_id = $request->category_id;
         $product->product_name = $request->product_name;
         $product->price = $request->price;
         $product->quanity = $request->quanity;
-        $product->image = $uploaded['destination'] . \ . $uploaded['file_name'];
+        $product->image = 'image/' . $uploaded['file_name'];
         $product->avg_rating = $request->avg_rating;
         $product->description = $request->description;
-        $product->save();
+        try {
+            $product->save();
+            
+        }catch(Exception $e) {
+            return back()->with('status', 'Create fail!');
+        }
         return redirect()->route('product.index')->with('success', 'Create product succes');
+       
 
     }
 
@@ -186,15 +194,16 @@ class ProductController extends Controller
                     'status' => false,
                     'msg' => 'Anh chỉ chấp nhận jpg với png thôi cưng',
                 ];
+            }else {
+                $file->move($destinationFolder, $fileName);
+
+                $result = [
+                    'status' => true,
+                    'file_name' => $fileName,
+                    'destination' => $destinationFolder,
+                ];
             }
-
-            $file->move($destinationFolder, $fileName);
-
-            $result = [
-                'status' => true,
-                'file_name' => $fileName,
-                'destination' => $destinationFolder,
-            ];
+            
         } catch(Exception $e) {
             $msg = $e->getMessage();
 

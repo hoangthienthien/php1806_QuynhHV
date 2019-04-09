@@ -27,7 +27,8 @@
 						</div>
 						<div class="row">
 							<div class="col-md-4">{{ __('image')}}</div>
-							<img src="{{ asset(config('products.image_path') . $product->image) }}" alt="{{ $product->image }}" height="70" width="70">
+							<img src="{{ asset($product->image) }}" alt = "{{ $product->image }}" style="width: 100%">
+							
 						</div>
 					</div>
 				</div>
