@@ -38,34 +38,9 @@ class ProductController extends Controller
      */
     public function store(ProductCreateRequest $request)
     {
-
-        // $product= $request->only([
-        //     'category_id',
-        //     'product_name',
-        //     'price',
-        //     //'image',
-        //     'quanity',
-        //     'avg_rating',
-        //     'description',
-        // ]);
-        // $product = $request->file('image');
-        // $uploaded = $this->uploadimage($product['image']);
-
-        // if(!$uploaded['status']) {
-        //     return back()->with('status', $uploaded['msg']);
-        // }
-        // $product['image'] = $uploaded['file_name'];
-        // try{
-        //     Products::create($product);
-        // }catch(Exception $e) {
-        //     return back()->with('status', 'Create fail!');
-        // }
-
-        // return redirect()->route('product.index')->with('success', 'Create product succes');
-
         $image = $request->file('image');
         $uploaded = $this->uploadimage($image);
-        
+        // dd($uploaded);
         $product = new Products;
 
         $product->category_id = $request->category_id;
@@ -79,6 +54,7 @@ class ProductController extends Controller
             $product->save();
             
         }catch(Exception $e) {
+
             return back()->with('status', 'Create fail!');
         }
         return redirect()->route('product.index')->with('success', 'Create product succes');
@@ -185,11 +161,10 @@ class ProductController extends Controller
     private function uploadimage($file) {
         $destinationFolder = public_path('image');
 
-        try {
             $fileName = $file->getClientOriginalName();
             $imageFileType = $file->getClientOriginalExtension();
 
-            if($imageFileType != "jpg" && $imageFileType != 'png') {
+            if($imageFileType != "jpg" || $imageFileType != 'png') {
                 $result = [
                     'status' => false,
                     'msg' => 'Anh chỉ chấp nhận jpg với png thôi cưng',
@@ -203,16 +178,7 @@ class ProductController extends Controller
                     'destination' => $destinationFolder,
                 ];
             }
-            
-        } catch(Exception $e) {
-            $msg = $e->getMessage();
-
-            $result = [
-                'status' => false,
-                'msg' => $msg,
-
-            ];
-        }
+        
         return $result;
     }
 }
